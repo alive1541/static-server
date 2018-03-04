@@ -1,12 +1,12 @@
 let path = require('path')
 let fs = require('fs')
-function handleFile(req, res, fields, files) {
+function handleFile(req, res, fields, files, filepath) {
     //获取文件名
     let name = fields.filename[0]
     //文件读取路径
     let rdPath = files.filechunk[0].path
     //文件写入路径
-    let wsPath = path.join(__dirname, '../..', 'public', name)
+    let wsPath = path.join(filepath, name)
     //通过range判断上传文件的位置
     let range = req.headers['range']
     let start = 0

@@ -1,11 +1,12 @@
 # static-server
 一个基于node的静态文件服务器
 # 功能
-<!-- - 读取静态文件 -->
-<!-- - MIME类型支持 -->
-<!-- - 缓存支持/控制 -->
-<!-- - 支持gzip压缩 -->
-<!-- - 只能访问指定目录, 不能访问指定目录的上级目录，保证安全 -->
-<!-- - 访问目录可以自动寻找下面的index.html文件 -->
+- 读取静态文件
+- MIME类型支持
+- 缓存支持/控制
+- 支持gzip、defalte压缩
 - Range支持，断点续传
-- 可以后台运行,可以通过npm install -g安装
+- 全局安装
+# 使用方法
+- npm install static-server2
+- server-start

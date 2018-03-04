@@ -1,5 +1,5 @@
 {
-  "name": "static-server",
+  "name": "static-server2",
   "version": "1.0.0",
   "description": "一个基于node的静态文件服务器",
   "main": "index.js",

@@ -22,7 +22,7 @@ class Server {
         //挂载模版方法
         this.compileHtml = compileHtml()
         //挂在配置，处理默认值
-        this.config = Object.assign({}, argv, config)
+        this.config = Object.assign({}, config, argv)
     }
     //启动http服务器
     start() {
@@ -35,11 +35,8 @@ class Server {
     }
     //http服务器请求处理函数
     async request(req, res) {
-        //cors跨域
-        res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080')
-        res.setHeader('Access-Control-Allow-Credentials', true)
-        res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS")
-        res.setHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With,Range")
+        //处理跨域
+        this.handleOption(req, res)
         if (req.method == 'OPTIONS') {
             return res.end()
         }
@@ -48,7 +45,7 @@ class Server {
         let filepath = path.join(this.config.document, pathname)
         //处理分块传输
         if (pathname == '/upfile' && req.method == 'POST') {
-            return this.handleChunk(req, res)
+            return this.handleChunk(req, res, this.config.document)
         }
         //如果是文件夹，读取文件夹发送目录，不是文件夹返回文件内容
         try {
@@ -61,6 +58,7 @@ class Server {
                         url: path.join(pathname, file)
                     }
                 })
+                console.log(files)
                 this.sendDirectory(req, res, filepath, files)
             } else {
                 let ifCatch = this.handleCatch(req, res, filepath, fileStat)
@@ -73,17 +71,25 @@ class Server {
         }
     }
     //处理断点续传
-    handleChunk(req, res) {
+    handleChunk(req, res, filepath) {
         let form = new multiparty.Form();
         form.parse(req, function (err, fields, files) {
             if (err) {
                 console.error('multiparty错误：', err)
             }
             if (files) {
-                handleFile(req, res, fields, files)
+                handleFile(req, res, fields, files, filepath)
             }
         });
 
+    }
+    //处理跨域等
+    handleOption(req, res) {
+        //cors跨域
+        res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080')
+        res.setHeader('Access-Control-Allow-Credentials', true)
+        res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS")
+        res.setHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With,Range")
     }
     //缓存处理函数
     handleCatch(req, res, filepath, fileStat) {
