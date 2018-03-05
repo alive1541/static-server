@@ -8,5 +8,5 @@
 - Range支持，断点续传
 - 全局安装
 # 使用方法
-- npm install static-server2
+- npm install static-server2 -g
 - server-start
