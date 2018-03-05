@@ -37,7 +37,6 @@ class Server {
     async request(req, res) {
         //处理跨域
         let domain = 'http://' + req.headers['host']
-        console.log(domain)
         this.handleOption(req, res, domain)
         if (req.method == 'OPTIONS') {
             return res.end()

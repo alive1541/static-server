@@ -69,7 +69,6 @@
     <a id="resume" type="button" class="a-upload">继续</a>
     <div class='percent'>进度：
         <span id="per">0</span>%</div>
-
 </body>
 <script>
     var upload = document.getElementById('upload')
@@ -103,7 +102,7 @@
     function up(file) {
         if (file && start < file.size) {
             var xhr = new XMLHttpRequest()
-            xhr.open('POST', 'http://127.0.0.1:8080/upfile', true);
+            xhr.open('POST', '/upfile', true);
             xhr.onreadystatechange = function () {
                 if (this.readyState == 4) {
                     if (this.status >= 200 && this.status < 300) {
