@@ -9,7 +9,7 @@
 - 全局安装
 # 安装
 - npm install static-server2 -g
-# 启动服务
+# 启动服务（node8.0以上）
 - server-start
 # 配置
 - 配置根目录：server-start -d /user/
