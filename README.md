@@ -7,6 +7,13 @@
 - 支持gzip、defalte压缩
 - Range支持，断点续传
 - 全局安装
-# 使用方法
+# 安装
 - npm install static-server2 -g
+# 启动服务
 - server-start
+# 配置
+- 配置根目录：server-start -d /user/
+- 配置根域名：server-start -o localhost
+- 配置端口：server-start -p 8080
+# 例子
+- 在本机的9090端口上监听客户端的请求：server-start -d / -p 9090 -o localhost 
