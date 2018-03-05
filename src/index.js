@@ -36,7 +36,9 @@ class Server {
     //http服务器请求处理函数
     async request(req, res) {
         //处理跨域
-        this.handleOption(req, res)
+        let domain = 'http://' + req.headers['host']
+        console.log(domain)
+        this.handleOption(req, res, domain)
         if (req.method == 'OPTIONS') {
             return res.end()
         }
@@ -58,7 +60,6 @@ class Server {
                         url: path.join(pathname, file)
                     }
                 })
-                console.log(files)
                 this.sendDirectory(req, res, filepath, files)
             } else {
                 let ifCatch = this.handleCatch(req, res, filepath, fileStat)
@@ -84,9 +85,9 @@ class Server {
 
     }
     //处理跨域等
-    handleOption(req, res) {
+    handleOption(req, res, domain) {
         //cors跨域
-        res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080')
+        res.setHeader('Access-Control-Allow-Origin', domain)
         res.setHeader('Access-Control-Allow-Credentials', true)
         res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS")
         res.setHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With,Range")
